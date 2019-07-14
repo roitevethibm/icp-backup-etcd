@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-etcd-backup
+  labels:
+    app: {{ .Chart.Name }}-{{ .Release.Name }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+data:
+  etcd-backup.sh: |-
+    #!/bin/sh
+    find /data -mtime +{{ .Values.backupParameters.backupRetention}} -exec rm {} \;
+    BACKUP_FILE=/data/etcd.$(date "+%Y.%m.%d-%H.%M.%S").db
+    etcdctl snapshot save $BACKUP_FILE

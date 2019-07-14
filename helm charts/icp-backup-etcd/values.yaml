@@ -1,0 +1,31 @@
+# Default values for icp-backup-etcd.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+image:
+  repository: ibmcom/etcd
+  tag: 3.2.24
+  pullPolicy: IfNotPresent
+
+## Persistence enabled by default
+## global persistence settings
+persistence:
+  enabled: true
+  useDynamicProvisioning: false
+
+backupVolume:
+  ## Specify the name of the Existing Claim to be used by your application
+  existingClaimName: ""
+ 
+  ## Specify the name of the StorageClass
+  ## empty string means don't use a StorageClass
+  storageClassName: ""
+
+  ## minimum Persistence Storage volume size of 1Gi
+  size: 1Gi
+
+backupParameters:
+  ## Specify the backup schedule in Cron format
+  backupSchedule: "*/1 * * * *"
+  ##backup save retention in days
+  backupRetention: 5
+
