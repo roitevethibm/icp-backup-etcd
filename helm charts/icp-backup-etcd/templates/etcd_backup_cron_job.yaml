@@ -9,6 +9,8 @@ metadata:
     heritage: "{{ .Release.Service }}"
 spec:
   schedule: "{{ .Values.backupParameters.backupSchedule }}"
+  successfulJobsHistoryLimit: 10
+  failedJobsHistoryLimit: 10
   jobTemplate:
     spec:
       template:
